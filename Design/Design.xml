@@ -4,6 +4,30 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://cern.ch/quasar/Design Design.xsd "
 	author="Benjamin Land">
+  <d:class name="Calibration">
+    <d:devicelogic></d:devicelogic>
+
+    <d:method name="getCalibConstants"
+	      executionSynchronicity="synchronous">
+      <d:returnvalue dataType="UaString" name="version"></d:returnvalue>
+      <d:documentation>
+	Return the current calibration constants
+      </d:documentation>
+    </d:method>
+
+    <d:method name="doCalibration" executionSynchronicity="synchronous">
+      <d:argument dataType="OpcUa_UInt32" name="FEMB_ID"></d:argument>
+      <d:returnvalue dataType="OpcUa_Boolean" name="success"></d:returnvalue>
+      <d:documentation>
+	Perform the auto-calibration procedure
+      </d:documentation>
+    </d:method>
+
+    <d:documentation>
+      Control the ColdADC calibrations
+    </d:documentation>
+  </d:class>
+  
 	<d:class name="FEMBPower">
 		<d:devicelogic></d:devicelogic>
 		<d:cachevariable initializeWith="configuration"
@@ -751,7 +775,10 @@
 	</d:class>
 
 	<d:class name="WIB">
-		<d:devicelogic></d:devicelogic>
+	  <d:devicelogic></d:devicelogic>
+	  <d:hasobjects instantiateUsing="configuration" class="Calibration"
+			maxOccurs="1" minOccurs="1">
+	  </d:hasobjects>
 		<d:hasobjects instantiateUsing="configuration" class="FEMBPower"
 			maxOccurs="1" minOccurs="1">
 		</d:hasobjects>
