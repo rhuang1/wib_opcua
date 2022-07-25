@@ -49,7 +49,6 @@ public:
         UaString& version
     ) ;
     UaStatus callDoCalibration (
-        OpcUa_UInt32 FEMB_ID,
         OpcUa_Boolean& success
     ) ;
 

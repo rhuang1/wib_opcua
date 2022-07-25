@@ -16,7 +16,6 @@
     </d:method>
 
     <d:method name="doCalibration" executionSynchronicity="synchronous">
-      <d:argument dataType="OpcUa_UInt32" name="FEMB_ID"></d:argument>
       <d:returnvalue dataType="OpcUa_Boolean" name="success"></d:returnvalue>
       <d:documentation>
 	Perform the auto-calibration procedure

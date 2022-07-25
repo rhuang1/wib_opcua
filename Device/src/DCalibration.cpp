@@ -75,11 +75,18 @@ UaStatus DCalibration::callGetCalibConstants (
     return OpcUa_BadNotImplemented;
 }
 UaStatus DCalibration::callDoCalibration (
-    OpcUa_UInt32 FEMB_ID,
     OpcUa_Boolean& success
 )
 {
-    return OpcUa_BadNotImplemented;
+    wib::Calibrate req;
+    wib::Status rep;
+    if (getParent()->wib.send_command(conf_req,conf_rep,10000)) {
+        if (!conf_rep.success()) return OpcUa_Bad;
+    } else {
+        return OpcUa_Bad;
+    }
+
+    return OpcUa_Good;
 }
 
 // 3333333333333333333333333333333333333333333333333333333333333333333333333
