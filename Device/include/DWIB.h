@@ -69,6 +69,7 @@ public:
     friend DFEMBPower;
     friend DTimingEndpoint;
     friend DSensors;
+    friend DCalibration;
     
     void update();
 

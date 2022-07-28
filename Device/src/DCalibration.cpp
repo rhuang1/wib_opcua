@@ -22,6 +22,7 @@
 
 #include <DCalibration.h>
 #include <ASCalibration.h>
+#include <DWIB.h>
 
 namespace Device
 {
@@ -80,8 +81,8 @@ UaStatus DCalibration::callDoCalibration (
 {
     wib::Calibrate req;
     wib::Status rep;
-    if (getParent()->wib.send_command(conf_req,conf_rep,10000)) {
-        if (!conf_rep.success()) return OpcUa_Bad;
+    if (getParent()->wib.send_command(req,rep,10000)) {
+        if (!rep.success()) return OpcUa_Bad;
     } else {
         return OpcUa_Bad;
     }
