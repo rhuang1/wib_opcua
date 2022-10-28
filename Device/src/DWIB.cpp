@@ -61,6 +61,7 @@ DWIB::DWIB (
 {
     LOG(Log::INF) << "Connecting to WIB at " << config.zmq_endpoint();
     wib.connect(config.zmq_endpoint());
+
 }
 
 /* sample dtr */
@@ -111,6 +112,34 @@ void DWIB::update()
     fembpower()->update();
     sensors()->update();
     timingendpoint()->update();
+
+    auto *as = getAddressSpaceLink();
+    if (as->getPoll_period() > 0 && poll_timer.elapsed() > as->getPoll_period()) {
+    	poll_timer.reset();
+    	getFWVersion();
+    	getSWVersion();
+    }
+}
+
+
+void DWIB::getFWVersion() {
+    wib::GetTimestamp req;
+    wib::GetTimestamp::Timestamp rep;
+    if (wib.send_command(req,rep,10000)) {
+        getAddressSpaceLink()->setFw_version(rep.timestamp(), OpcUa_Good);
+    } else {
+    	getAddressSpaceLink()->setFw_version(0, OpcUa_Bad);
+    }
+}
+
+void DWIB::getSWVersion() {
+    wib::GetSWVersion req;
+    wib::GetSWVersion::Version rep;
+    if (wib.send_command(req,rep,10000)) {
+        getAddressSpaceLink()->setSw_version(rep.version().c_str(), OpcUa_Good);
+    } else {
+    	getAddressSpaceLink()->setSw_version("", OpcUa_Bad);
+    }
 }
 
 }
