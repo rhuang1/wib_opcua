@@ -25,6 +25,7 @@
 
 #include "wib.hh"
 #include <zmq.hpp>
+#include "timer.hh"
 
 namespace Device
 {
@@ -72,10 +73,13 @@ public:
     friend DCalibration;
     
     void update();
+    void getFWVersion();
+    void getSWVersion();
 
 private:
     
     WIB_ZMQ wib;
+    Timer poll_timer;
 
 };
 
